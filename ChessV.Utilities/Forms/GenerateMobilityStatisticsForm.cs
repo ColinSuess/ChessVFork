@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Windows.Forms;
+using ChessV.Games;
 
 namespace ChessV.Utilities
 {
