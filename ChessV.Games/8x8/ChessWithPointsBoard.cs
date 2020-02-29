@@ -57,7 +57,7 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+            Array = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBOKBNR";
             PawnDoubleMove = true;
             EnPassant = true;
             Castling.Value = "Standard";
@@ -71,7 +71,7 @@ namespace ChessV.Games
         {
             base.AddPieceTypes();
             AddChessPieceTypes();
-            //AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000));
+            AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000, "StarCat"));
         }
         #endregion
     }
