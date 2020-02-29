@@ -63,7 +63,7 @@ namespace ChessV.Utilities
 			addPieceType( typeof(Phoenix), "WA" );
 			addPieceType( typeof(Cleric), "BD" );
 			addPieceType( typeof(ShortRook), "R4" );
-			addPieceType( typeof(Bowman), "WD" );
+			//addPieceType( typeof(Bowman), "WD" );
 			addPieceType( typeof(NarrowKnight), "fbNF" );
 			addPieceType( typeof(ChargingRook), "frlRbK" );
 			addPieceType( typeof(ChargingKnight), "fhNrlbK" );
