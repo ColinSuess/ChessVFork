@@ -69,7 +69,7 @@ namespace ChessV.Utilities
 			addPieceType( typeof(ChargingKnight), "fhNrlbK" );
 			addPieceType( typeof(Colonel), "fhNfrlRbK" );
 
-			ChessV.Games.Abstract.UndefinedGame game = new Games.Abstract.UndefinedGame( 2, nFiles, nRanks );
+			ChessV.Games.Abstract.UndefinedGame game = new Games.Abstract.UndefinedGame( nFiles, nRanks );
 			game.Initialize( new GameAttribute( "", typeof(Geometry.Rectangular), nFiles, nRanks ), null, null );
 
 			StringBuilder str = new StringBuilder();
