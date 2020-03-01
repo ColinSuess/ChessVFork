@@ -38,8 +38,6 @@ namespace ChessV
 		// *** PUBLIC PROPERTIES *** //
 
 		#region Public Properties
-		public bool HasSwap = false; //Specific to the swap capability of ChessWithPoints
-
 		public Game Game { get; private set; }
 		public Board Board { get; private set; }
 

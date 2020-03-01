@@ -33,7 +33,8 @@ namespace ChessV
 	public class Piece: GenericPiece
 	{
 		// *** PROPERTIES *** //
-
+		//Specific to the swap capability of ChessWithPoints
+		public bool HasSwap = false; 
 		//	Reference to the Game the piece is participating in
 		public Game Game { get; private set; }
 

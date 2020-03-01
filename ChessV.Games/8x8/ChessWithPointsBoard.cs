@@ -128,12 +128,18 @@ namespace ChessV.Games
 
             foreach(Piece p in GetPieceList(0)) //player 1
             {
-                if(p.HasSwap)
+                if(p.HasSwap == true)
+                {
+                    break;//add code here
+                }
             }
 
             foreach (Piece p in GetPieceList(1)) //player 2
             {
-
+                if (p.HasSwap == true)
+                {
+                    break;//add code here
+                }
             }
 
 
