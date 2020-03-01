@@ -17,7 +17,7 @@ more details; the file 'COPYING' contains the License text, but if for
 some reason you need a copy, please visit <http://www.gnu.org/licenses/>.
 
 ****************************************************************************/
-
+using ChessV.Evaluations;
 namespace ChessV.Games
 {
     //**********************************************************************
@@ -39,8 +39,8 @@ namespace ChessV.Games
     [Appearance(ColorScheme = "Luna Decorabat")]
     public class ChessWithPoints : Abstract.Generic8x8
     {
-        public PieceType OldQueen;
-
+        [Royal] public PieceType OldQueen;
+        
         // *** CONSTRUCTION *** //
 
         public ChessWithPoints() :
@@ -57,10 +57,10 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBOKBNR";
+            Array = "rnbqobnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQOBNR";
             PawnDoubleMove = true;
-            EnPassant = true;
-            Castling.Value = "Standard";
+            EnPassant = false;
+            Castling.Value = "None";
             PromotionRule.Value = "Standard";
             PromotionTypes = "QRNB";
         }
@@ -73,6 +73,17 @@ namespace ChessV.Games
             AddChessPieceTypes();
             AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000, "StarCat"));
         }
+        #endregion
+
+
+        #region AddRules
+        public override void AddRules()
+        {
+            base.AddRules();
+            RemoveRule(typeof(Rules.CheckmateRule));
+            AddRule(new Rules.CheckmateRule(OldQueen));
+        }
+
         #endregion
     }
 }

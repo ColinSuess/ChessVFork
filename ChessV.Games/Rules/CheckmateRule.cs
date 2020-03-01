@@ -42,7 +42,7 @@ namespace ChessV.Games.Rules
 
 		public override void Initialize( Game game )
 		{
-			royalPieces = new Piece[game.NumPlayers];
+			royalPieces = new Piece[game.NumPlayers]; //what about multiple royals on a side?
 			base.Initialize( game );
 			if( RoyalPieceType.FindCustomAttributes( typeof(RoyalAttribute) ).Count == 0 )
 				RoyalPieceType.AddAttribute( new RoyalAttribute() );
