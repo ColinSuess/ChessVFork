@@ -203,6 +203,7 @@
     <Compile Include="Rules\CaptureByAdvanceRule.cs" />
     <Compile Include="Rules\CastlingRule.cs" />
     <Compile Include="Rules\CheckmateRule.cs" />
+    <Compile Include="Rules\ChessWithPoints\CwPCheckmateRule.cs" />
     <Compile Include="Rules\KingsCourt\KingsFlightRule.cs" />
     <Compile Include="Rules\LimitPieceTypeQuantityRule.cs" />
     <Compile Include="Rules\OptionalCaptureByOvertakeRule.cs" />

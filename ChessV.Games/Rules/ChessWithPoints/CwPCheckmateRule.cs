@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 namespace ChessV.Games.Rules
 {
-	public class CheckmateRule: Rule
+	public class CwPCheckmateRule: Rule
 	{
 		// *** PROPERTIES *** //
 
@@ -34,7 +34,7 @@ namespace ChessV.Games.Rules
 
 		// *** CONSTRUCTION ** //
 
-		public CheckmateRule( PieceType royalPieceType )
+		public CwPCheckmateRule( PieceType royalPieceType )
 		{
 			RoyalPieceType = royalPieceType;
 			StalemateResult = MoveEventResponse.GameDrawn;
@@ -42,7 +42,7 @@ namespace ChessV.Games.Rules
 
 		public override void Initialize( Game game )
 		{
-			royalPieces = new Piece[game.NumPlayers]; //what about multiple royals on a side?
+			royalPieces = new List<Piece>(game.NumPlayers);
 			base.Initialize( game );
 			if( RoyalPieceType.FindCustomAttributes( typeof(RoyalAttribute) ).Count == 0 )
 				RoyalPieceType.AddAttribute( new RoyalAttribute() );
@@ -62,9 +62,13 @@ namespace ChessV.Games.Rules
 			for( int player = 0; player < Game.NumPlayers; player++ )
 			{
 				List<Piece> piecelist = Game.GetPieceList( player );
-				foreach( Piece piece in piecelist )
-					if( piece.PieceType == RoyalPieceType )
-						royalPieces[player] = piece;
+				foreach (Piece piece in piecelist)
+				{
+					if (piece.PieceType == RoyalPieceType)
+					{
+						royalPieces.Add(piece);
+					}
+				}
 
 			}
 		}
@@ -111,6 +115,6 @@ namespace ChessV.Games.Rules
 
 		// *** PROTECTED DATA MEMBERS *** //
 
-		protected Piece[] royalPieces;
+		protected List<Piece> royalPieces;
 	}
 }
