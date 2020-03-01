@@ -443,10 +443,29 @@ namespace ChessV
 					break;
 
 				//	store the number of nodes considered for this move
-				nodesPerMove.Add( currentMove.Hash, (int) ((Statistics.Nodes - startNodeCount) / depth) );
+				try //TRY BLOCK IS TECHNICAL DEBT. WE NEED TO NARROW DOWN ON THE FOLLOWING, WHICH OCCURS WITH A FASTCHARIOT
+					/*Fast Chariot
+						Exception type: System.ArgumentException
+						Message: An item with the same key has already been added.
+						Source: mscorlib
+						Stack Trace: 
+						   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+						   at System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+						   at ChessV.Game.SearchRoot(Int32 alpha, Int32 beta, Int32 depth, List`1 movesToExclude) in C:\Users\colin\source\repos\ChessV2.2-Source\ChessV.Base\Search.cs:line 446
+						   at ChessV.Game.Think(TimeControl timeControl, Int32 multiPV) in C:\Users\colin\source\repos\ChessV2.2-Source\ChessV.Base\Search.cs:line 216
+					*/
+				{
+					nodesPerMove.Add(currentMove.Hash, (int)((Statistics.Nodes - startNodeCount) / depth));
+				}
+					catch (System.ArgumentException)
+				{
+					continue;
+				}
+
+
 
 				//	if this move is better than alpha, we have a new PV
-				if( score > alpha )
+				if ( score > alpha )
 				{
 					alpha = score;
 					updatePV( 1 );
@@ -537,7 +556,8 @@ namespace ChessV
 
 			// *** INTERNAL ITERATIVE DEEPENING *** //
 			bool useIID =
-				/* we have no move from the hashtable ... */ Movement.GetMoveTypeFromHash( hashtableMove ) == MoveType.Invalid &&
+				/* we have no move from the hashtable ... */
+															 Movement.GetMoveTypeFromHash( hashtableMove ) == MoveType.Invalid &&
 				/* ... and we have at least 5 ply remaining */ depth >= 5*ONEPLY &&
 				/* ... and we are not in check */ extension == 0;
 			if( useIID )

@@ -39,6 +39,26 @@ namespace ChessV.Games
     [Appearance(ColorScheme = "Luna Decorabat")]
     public class ChessWithPoints : Abstract.Generic8x8
     {
+        public PieceType Squire;
+        public PieceType ShieldBearer;
+        public PieceType Peasant;
+        public PieceType Adept;
+        public PieceType Mule;
+        public PieceType WildStallion;
+        public PieceType ClergyRiders;
+        public PieceType LanceRider;
+        public PieceType Pegasus;
+        public PieceType HighPriest;
+        public PieceType CorruptedAbbot;
+        public PieceType ArcanePriest;
+        public PieceType DamagedChariot;
+        public PieceType FastChariot;
+        public PieceType ArmoredChariot;
+        public PieceType ArcaneTower;
+        public PieceType Sorceress;
+        public PieceType JoanofArc;
+        public PieceType QueenofAir;
+        public PieceType QueenofDarkness;
         [Royal] public PieceType OldQueen;
         
         // *** CONSTRUCTION *** //
@@ -57,7 +77,7 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rnbokbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBOKBNR";
+            Array = "rnbokbnr/pppppppp/8/8/8/8/PPPPPPPP/INBOKBNI";
             PawnDoubleMove = true;
             EnPassant = false;
             Castling.Value = "None";
@@ -72,7 +92,7 @@ namespace ChessV.Games
             base.AddPieceTypes();
             AddChessPieceTypes();
             AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000, "StarCat"));
-
+            AddPieceType(FastChariot = new FastChariot("Fast Chariot", "I", 500, 500, "FastChariot"));
         }
         #endregion
 
@@ -81,7 +101,7 @@ namespace ChessV.Games
         public override void AddRules()
         {
             base.AddRules();
-            AddRule(new Rules.CheckmateRule(OldQueen));
+            AddRule(new Rules.CwPCheckmateRule(OldQueen));
         }
 
         #endregion
