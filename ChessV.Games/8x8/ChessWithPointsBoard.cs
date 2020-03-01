@@ -80,12 +80,12 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rnbokbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBOKBNR";
+            Array = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
             PawnDoubleMove = true;
             EnPassant = false;
             Castling.Value = "None";
-            //PromotionRule.Value = "Standard";
-            PromotionRule.Value = "Custom";
+            PromotionRule.Value = "Standard";
+            //PromotionRule.Value = "Custom";
             PromotionTypes = "QRNB";
         }
         #endregion
@@ -95,12 +95,16 @@ namespace ChessV.Games
         {
             base.AddPieceTypes();
             AddChessPieceTypes();
-            AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000, "StarCat"));
+            
             AddPieceType(FastChariot = new FastChariot("Fast Chariot", "I", 500, 500, "FastChariot"));
             AddPieceType(QueenOfDarkness = new QueenofAirAndDarkness("QueenOfAirAndDarkness", "E", 900, 1000));
             AddPieceType(Peasant = new Peasant("Peasant", "X", 100, 125));
             AddPieceType(Sorceress = new Sorceress("Sorceress", "S", 100, 125));
             AddPieceType(Adept = new Adept("Adept", "A", 100, 125));
+            if(Array.Contains("O") || Array.Contains("o"))
+            {
+                AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000, "StarCat"));
+            }
         }
         #endregion
 
@@ -108,18 +112,21 @@ namespace ChessV.Games
         public override void AddRules()
         {
             base.AddRules();
-
-            if (Array.Contains("O") == true)
+            if (Array.Contains("O") || Array.Contains("o"))
             {
-                AddRule(new Rules.CwPCheckmateRule(OldQueen));
+                RemoveRule(typeof(Rules.CheckmateRule));
+                AddRule(new Rules.CwPCheckmateRule(King));
             }
+                //AddRule(new Rules.CheckmateRule(King));
+                
 
 
-            //AddRule(new Rules.ChessWithPointsSwapRule(src, dst));
-            //AddRule(new Rules.CwP.ComplexPromotionRule());
-            //  OptionalPromotionFromAndToLocationDelegate
 
-            if (PromotionRule.Value == "Custom")
+                //AddRule(new Rules.ChessWithPointsSwapRule(src, dst));
+                //AddRule(new Rules.CwP.ComplexPromotionRule());
+                //  OptionalPromotionFromAndToLocationDelegate
+
+                if (PromotionRule.Value == "Custom")
             {
                 Rules.ComplexPromotionRule promotionRule = new Rules.ComplexPromotionRule();
 
