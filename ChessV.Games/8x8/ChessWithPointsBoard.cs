@@ -77,7 +77,7 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rneokbnr/pppppppp/8/8/8/8/PPPPPPPP/INEOKBNI";
+            Array = "rneokbnr/pppppppp/8/8/8/8/XXXXXXXX/INEOKBNI";
             PawnDoubleMove = true;
             EnPassant = false;
             Castling.Value = "None";
@@ -93,7 +93,8 @@ namespace ChessV.Games
             AddChessPieceTypes();
             AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000, "StarCat"));
             AddPieceType(FastChariot = new FastChariot("Fast Chariot", "I", 500, 500, "FastChariot"));
-            AddPieceType(QueenOfDarkness = new QueenofDarkness("QueenOfDarkness", "E", 900, 1000));
+            AddPieceType(QueenOfDarkness = new QueenofAirAndDarkness("QueenOfAirAndDarkness", "E", 900, 1000));
+            AddPieceType(Peasant = new Peasant("Peasant", "X", 100, 125));
         }
         #endregion
         

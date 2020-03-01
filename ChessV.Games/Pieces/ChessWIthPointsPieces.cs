@@ -28,11 +28,11 @@ namespace ChessV.Games
     #endregion
 
     #region QueenofDarkness
-    [PieceType("QueenofDarkness", "ChessWithPoints")]
-    public class QueenofDarkness : PieceType
+    [PieceType("QueenofAirAndDarkness", "ChessWithPoints")]
+    public class QueenofAirAndDarkness : PieceType
     {
-        public QueenofDarkness(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
-            base("QueenofDarkness", name, notation, midgameValue, endgameValue, preferredImageName)
+        public QueenofAirAndDarkness(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
+            base("QueenofAirAndDarkness", name, notation, midgameValue, endgameValue, preferredImageName)
         {
             AddMoves(this);
         }
@@ -40,10 +40,18 @@ namespace ChessV.Games
 
         public static new void AddMoves(PieceType type)
         {
-            type.Slide(new Direction(0, 1));
-            type.Slide(new Direction(0, -1));
-            type.Slide(new Direction(1, 0));
-            type.Slide(new Direction(-1, 0));
+            type.Slide(new Direction(0, 1), 2, 2);
+            type.Slide(new Direction(0, -1), 2, 2);
+            type.Slide(new Direction(0, 1), 4, 4);
+            type.Slide(new Direction(0, -1), 4, 4);
+            type.Slide(new Direction(0, 1), 6, 6);
+            type.Slide(new Direction(0, -1), 6, 6);
+            type.Slide(new Direction(1,0), 2, 2);
+            type.Slide(new Direction(-1,0), 2, 2);
+            type.Slide(new Direction(1, 0), 4, 4);
+            type.Slide(new Direction(-1, 0), 4, 4);
+            type.Slide(new Direction(1, 0), 6, 6);
+            type.Slide(new Direction(-1,0), 6, 6);
             Bishop.AddMoves(type);
         }
     }
@@ -232,6 +240,56 @@ namespace ChessV.Games
     #endregion nobles
 
     #region Commoner types
+    #region Peasant
+    [PieceType("Peasant", "ChessWithPoints")]
+    public class Peasant : PieceType
+    {
+        public bool isNoble = false;
+        public bool isCommoner = true;
+        public Peasant(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
+              base("Pawn", name, notation, midgameValue, endgameValue, preferredImageName)
+        {
+            IsPawn = true;
+            IsSliced = false;
+            AddMoves(this);
+
+            //	Customize the piece-square-tables for the Pawn
+            PSTMidgameForwardness = 7;
+            PSTEndgameForwardness = 10;
+            PSTMidgameInSmallCenter = 6;
+        }
+
+        public static new void AddMoves(PieceType type)
+        {
+            type.StepMoveOnly(new Direction(1, 0));
+            type.StepCaptureOnly(new Direction(1, 1));
+            type.StepCaptureOnly(new Direction(1, -1));
+            type.StepMoveOnly(new Direction(-7, 0));
+            type.StepCaptureOnly(new Direction(-7, 1));
+            type.StepCaptureOnly(new Direction(-7, -1));
+            MoveCapability doubleMove = new MoveCapability();
+            doubleMove.MinSteps = 2;
+            doubleMove.MaxSteps = 2;
+            doubleMove.MustCapture = false;
+            doubleMove.CanCapture = false;
+            doubleMove.Direction = new Direction(1, 0);
+            doubleMove.Condition = location => location.Rank == 1;
+            type.AddMoveCapability(doubleMove);
+        }
+
+        public override void Initialize(Game game)
+        {
+            base.Initialize(game);
+
+            //	Set the pawn hash keys, used for the pawn structure hash table.
+            //	Every other type has zeros here (assigned by the base class 
+            //	implementation of this function.)  This override sets the 
+            //	values to non-zero values for the pawn piece type only.
+            for (int player = 0; player < game.NumPlayers; player++)
+                pawnHashKeyIndex[player] = 256 * (player + 1);
+        }
+    }
+    #endregion
     #region Squire
     [PieceType("Squire", "ChessWithPoints")]
     public class Squire : PieceType
