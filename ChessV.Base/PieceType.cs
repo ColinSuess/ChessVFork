@@ -438,6 +438,9 @@ namespace ChessV
 		public MoveCapability Slide( Direction direction, int maxSteps )
 		{ moveCapabilities[nMoveCapabilities] = MoveCapability.Slide( direction, maxSteps ); return moveCapabilities[nMoveCapabilities++]; }
 
+		public MoveCapability Slide(Direction direction, int maxSteps, int minSteps)
+		{ moveCapabilities[nMoveCapabilities] = MoveCapability.Slide(direction, maxSteps, minSteps); return moveCapabilities[nMoveCapabilities++]; }
+
 		public MoveCapability StepMoveOnly( Direction direction )
 		{ moveCapabilities[nMoveCapabilities] = MoveCapability.StepMoveOnly( direction ); return moveCapabilities[nMoveCapabilities++]; }
 

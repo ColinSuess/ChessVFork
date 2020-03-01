@@ -139,6 +139,11 @@ namespace ChessV
 			return new MoveCapability( direction, maxSteps );
 		}
 
+		public static MoveCapability Slide(Direction direction, int maxSteps, int minSteps)
+		{
+			return new MoveCapability(direction, maxSteps, minSteps);
+		}
+
 		public static MoveCapability StepMoveOnly( Direction direction )
 		{
 			return new MoveCapability( direction, 1, 1, false );

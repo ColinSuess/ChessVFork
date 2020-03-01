@@ -26,6 +26,28 @@ namespace ChessV.Games
 		}
 	}
     #endregion
+
+    #region QueenofDarkness
+    [PieceType("QueenofDarkness", "ChessWithPoints")]
+    public class QueenofDarkness : PieceType
+    {
+        public QueenofDarkness(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
+            base("QueenofDarkness", name, notation, midgameValue, endgameValue, preferredImageName)
+        {
+            AddMoves(this);
+        }
+    
+
+        public static new void AddMoves(PieceType type)
+        {
+            type.Slide(new Direction(0, 1));
+            type.Slide(new Direction(0, -1));
+            type.Slide(new Direction(1, 0));
+            type.Slide(new Direction(-1, 0));
+            Bishop.AddMoves(type);
+        }
+    }
+    #endregion
     #endregion Queen types
 
 

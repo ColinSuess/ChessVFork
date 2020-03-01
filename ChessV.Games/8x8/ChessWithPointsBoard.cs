@@ -57,8 +57,8 @@ namespace ChessV.Games
         public PieceType ArcaneTower;
         public PieceType Sorceress;
         public PieceType JoanofArc;
-        public PieceType QueenofAir;
-        public PieceType QueenofDarkness;
+        public PieceType QueenOfAir;
+        public PieceType QueenOfDarkness;
         [Royal] public PieceType OldQueen;
         
         // *** CONSTRUCTION *** //
@@ -77,7 +77,7 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rnbokbnr/pppppppp/8/8/8/8/PPPPPPPP/INBOKBNI";
+            Array = "rneokbnr/pppppppp/8/8/8/8/PPPPPPPP/INEOKBNI";
             PawnDoubleMove = true;
             EnPassant = false;
             Castling.Value = "None";
@@ -93,9 +93,10 @@ namespace ChessV.Games
             AddChessPieceTypes();
             AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000, "StarCat"));
             AddPieceType(FastChariot = new FastChariot("Fast Chariot", "I", 500, 500, "FastChariot"));
+            AddPieceType(QueenOfDarkness = new QueenofDarkness("QueenOfDarkness", "E", 900, 1000));
         }
         #endregion
-
+        
 
         #region AddRules
         public override void AddRules()
