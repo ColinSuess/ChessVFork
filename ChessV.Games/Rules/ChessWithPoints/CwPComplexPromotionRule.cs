@@ -133,8 +133,10 @@ namespace ChessV.Games.Rules.CwP
 							}
 						}
 
+
+						#region new replacement code
 						//	handle promotion by replacement
-						if( promotion.ReplacementPromotionTypes != null )
+						if ( promotion.ReplacementPromotionTypes != null )
 						{
 							List<Piece> capturedPieces = Game.GetCapturedPieceList( movingPiece.Player );
 							foreach( Piece capturedFriendlyPiece in capturedPieces )
@@ -162,6 +164,38 @@ namespace ChessV.Games.Rules.CwP
 								}
 							}
 						}
+                        #endregion
+                        #region old replacement code
+                        //	handle promotion by replacement
+                        /*if ( promotion.ReplacementPromotionTypes != null )
+						{
+							List<Piece> capturedPieces = Game.GetCapturedPieceList( movingPiece.Player );
+							foreach( Piece capturedFriendlyPiece in capturedPieces )
+							{
+								if( capturedFriendlyPiece.TypeNumber != movingPiece.TypeNumber &&
+									!typesUsed[capturedFriendlyPiece.TypeNumber] && 
+									promotion.ReplacementPromotionTypes.Contains( capturedFriendlyPiece.PieceType ) )
+								{
+									if( capturedPiece == null )
+									{
+										moves.BeginMoveAdd( MoveType.MoveReplace, from, to, capturedFriendlyPiece.TypeNumber );
+										moves.AddPickup( from );
+										moves.AddDrop( capturedFriendlyPiece, to );
+										moves.EndMoveAdd( 5000 + capturedFriendlyPiece.PieceType.MidgameValue );
+									}
+									else
+									{
+										moves.BeginMoveAdd( MoveType.CaptureReplace, from, to, capturedFriendlyPiece.TypeNumber );
+										moves.AddPickup( from );
+										moves.AddPickup( to );
+										moves.AddDrop( capturedFriendlyPiece, to );
+										moves.EndMoveAdd( 5000 + capturedFriendlyPiece.PieceType.MidgameValue + capturedPiece.PieceType.MidgameValue );
+									}
+									typesUsed[capturedFriendlyPiece.TypeNumber] = true;
+								}
+							}
+						}*/
+						#endregion
 						return MoveEventResponse.Handled;
 					}
 				}

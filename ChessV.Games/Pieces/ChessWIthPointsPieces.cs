@@ -9,6 +9,33 @@ namespace ChessV.Games
     #region nobles
 
     #region Queen types
+    #region Sorceress
+    [PieceType("Sorceress", "ChessWithPoints")]
+    public class Sorceress : PieceType
+    {
+        public bool HasSwap = true;
+        public Sorceress(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
+            base("Sorceress", name, notation, midgameValue, endgameValue, preferredImageName)
+        {
+            AddMoves(this);
+        }
+
+        public static new void AddMoves(PieceType type)
+        {
+            //Rook
+            type.Slide(new Direction(0, 1), 5);
+            type.Slide(new Direction(0, -1), 5);
+            type.Slide(new Direction(1, 0), 5);
+            type.Slide(new Direction(-1, 0), 5);
+            //Bishop
+            type.Slide(new Direction(1, 1), 5);
+            type.Slide(new Direction(1, -1), 5);
+            type.Slide(new Direction(-1, 1), 5);
+            type.Slide(new Direction(-1, -1), 5);
+        }
+    }
+    #endregion
+
     #region Old Queen
     [PieceType("OldQueen", "Chess with Points")]
 	public class OldQueen : PieceType
@@ -60,6 +87,42 @@ namespace ChessV.Games
 
 
     #region Rook types
+
+    #region ArcaneTower
+    [PieceType("ArcaneTower", "ChessWithPoints")]
+    public class ArcaneTower : PieceType
+    {
+        public bool HasSwap = true;
+        public ArcaneTower(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
+            base("ArcaneTower", name, notation, midgameValue, endgameValue, preferredImageName)
+        {
+            AddMoves(this);
+
+            #region Customize piece-square-tables for the Rook
+            PSTMidgameInSmallCenter = 0;
+            PSTMidgameInLargeCenter = 0;
+            PSTMidgameSmallCenterAttacks = 2;
+            PSTMidgameLargeCenterAttacks = 2;
+            PSTMidgameForwardness = 0;
+            PSTMidgameGlobalOffset = 0;
+            PSTEndgameInSmallCenter = 0;
+            PSTEndgameInLargeCenter = 0;
+            PSTEndgameSmallCenterAttacks = 0;
+            PSTEndgameLargeCenterAttacks = 0;
+            PSTEndgameForwardness = 0;
+            PSTEndgameGlobalOffset = 0;
+            #endregion
+        }
+
+        public static new void AddMoves(PieceType type)
+        {
+            type.Step(new Direction(0, 1));
+            type.Step(new Direction(0, -1));
+            type.Step(new Direction(1, 0));
+            type.Step(new Direction(-1, 0));
+        }
+    }
+    #endregion
 
     #region DamagedChariot
     [PieceType("DamagedChariot", "ChessWithPoints")]
@@ -163,34 +226,35 @@ namespace ChessV.Games
             doubleMove.Direction = new Direction(1, 0);
             doubleMove.Condition = location => location.Rank == 1;
             type.AddMoveCapability(doubleMove);*/
-        }/*
-        public ChessWithPointsSwapRule(Piece srcPiece, Piece dstPiece)
-        {
-            this.srcPiece = srcPiece;
-            this.dstPiece = dstPiece;
-
         }
-
-        public override void GenerateSpecialMoves(MoveList list, bool capturesOnly, int ply)
-        {
-            //get location of srcPiece
-            //get location of dstPiece
-            //swap them
-
-            list.BeginMoveAdd(MoveType.Swap, srcPiece.Square, dstPiece.Square);
-            Piece src = list.AddPickup(srcPiece.Square);
-            Piece dst = list.AddPickup(dstPiece.Square);
-            list.AddDrop(src, dstPiece.Square);
-            list.AddDrop(dst, srcPiece.Square);
-            list.EndMoveAdd(0);
-
-        }*/
+        
     }
     #endregion
     #endregion rook types
 
 
     #region Bishop types
+
+    #region Arcanepriest
+    [PieceType("Arcanepriest", "ChessWithPoints")]
+    public class Arcanepriest : PieceType
+    {
+        public bool HasSwap = true;
+        public Arcanepriest(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
+            base("Arcanepriest", name, notation, midgameValue, endgameValue, preferredImageName)
+        {
+            AddMoves(this);
+        }
+
+        public static new void AddMoves(PieceType type)
+        {
+            type.Slide(new Direction(1, 1), 3);
+            type.Slide(new Direction(1, -1), 3);
+            type.Slide(new Direction(-1, 1), 3);
+            type.Slide(new Direction(-1, -1), 3);
+        }
+    }
+    #endregion
 
     #region Clergyriders
     [PieceType("Clergyriders", "ChessWithPoints")]
@@ -234,9 +298,42 @@ namespace ChessV.Games
         }
     }
     #endregion
+
     #endregion bishop types
 
     #region Knight types
+
+    #region Pegasus
+    [PieceType("Pegasus", "ChessWithPoints")]
+    public class Pegasus : PieceType
+    {
+        public bool HasSwap = true;
+        public Pegasus(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
+            base("Pegasus", name, notation, midgameValue, endgameValue, preferredImageName)
+        {
+            AddMoves(this);
+
+            //	Customize piece-square-tables for the Knight
+            PSTMidgameInSmallCenter = 8;
+            PSTMidgameInLargeCenter = 5;
+            PSTMidgameForwardness = 2;
+            PSTMidgameLargeCenterAttacks = 4;
+        }
+
+        public static new void AddMoves(PieceType type)
+        {
+            type.Step(new Direction(1, 2));
+            type.Step(new Direction(2, 1));
+            type.Step(new Direction(2, -1));
+            type.Step(new Direction(1, -2));
+            type.Step(new Direction(-1, -2));
+            type.Step(new Direction(-2, -1));
+            type.Step(new Direction(-2, 1));
+            type.Step(new Direction(-1, 2));
+        }
+    }
+    #endregion
+
     #region Lancerider
     [PieceType("Lancerider", "ChessWithPoints")]
     public class Lancerider : PieceType
@@ -273,6 +370,47 @@ namespace ChessV.Games
     #endregion nobles
 
     #region Commoner types
+
+    #region Adept
+    [PieceType("Adept", "ChessWithPoints")]
+    public class Adept : PieceType
+    {
+        public bool isNoble = false;
+        public bool isCommoner = true;
+        public bool HasSwap = true;
+        public Adept(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
+               base("Pawn", name, notation, midgameValue, endgameValue, preferredImageName)
+        {
+            IsPawn = true;
+            IsSliced = false;
+            AddMoves(this);
+
+            //	Customize the piece-square-tables for the Pawn
+            PSTMidgameForwardness = 7;
+            PSTEndgameForwardness = 10;
+            PSTMidgameInSmallCenter = 6;
+        }
+
+        public static new void AddMoves(PieceType type)
+        {
+            type.StepMoveOnly(new Direction(1, 0));
+
+        }
+
+        public override void Initialize(Game game)
+        {
+            base.Initialize(game);
+
+            //	Set the pawn hash keys, used for the pawn structure hash table.
+            //	Every other type has zeros here (assigned by the base class 
+            //	implementation of this function.)  This override sets the 
+            //	values to non-zero values for the pawn piece type only.
+            for (int player = 0; player < game.NumPlayers; player++)
+                pawnHashKeyIndex[player] = 256 * (player + 1);
+        }
+    }
+    #endregion
+
     #region Peasant
     [PieceType("Peasant", "ChessWithPoints")]
     public class Peasant : PieceType

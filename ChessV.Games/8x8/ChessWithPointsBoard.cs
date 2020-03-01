@@ -99,6 +99,8 @@ namespace ChessV.Games
             AddPieceType(FastChariot = new FastChariot("Fast Chariot", "I", 500, 500, "FastChariot"));
             AddPieceType(QueenOfDarkness = new QueenofAirAndDarkness("QueenOfAirAndDarkness", "E", 900, 1000));
             AddPieceType(Peasant = new Peasant("Peasant", "X", 100, 125));
+            AddPieceType(Sorceress = new Sorceress("Sorceress", "S", 100, 125));
+            AddPieceType(Adept = new Adept("Adept", "A", 100, 125));
         }
         #endregion
 
@@ -115,14 +117,14 @@ namespace ChessV.Games
             {
                 Rules.ComplexPromotionRule promotionRule = new Rules.ComplexPromotionRule();
 
-                List<PieceType> promotionTypes = new List<PieceType>() { Peasant };
+                List<PieceType> promotionTypes = new List<PieceType>() { Bishop };
                 //OR                 List<PieceType> availablePromotionTypes = ParseTypeListFromString(PromotionTypes);
 
 
                 //Location fromLoc;
                 //Location toLoc;
                 //Rules.OptionalPromotionFromAndToLocationDelegate x = new Rules.OptionalPromotionFromAndToLocationDelegate(fromLoc, toLoc);
-                List<PieceType> promoteByReplacementTypes = new List<PieceType>() { Bishop };
+                List<PieceType> promoteByReplacementTypes = new List<PieceType>() { Peasant };
                 promotionRule.AddPromotionCapability(Bishop, promotionTypes, promoteByReplacementTypes,
                     (fromLoc, toLoc) => fromLoc.Rank == 3 || toLoc.Rank == 3 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote);
 
