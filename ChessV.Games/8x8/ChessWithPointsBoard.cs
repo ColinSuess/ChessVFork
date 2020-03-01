@@ -80,7 +80,7 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rneokbnr/pppppppp/8/8/8/8/XXXXXXXX/INEOKBNI";
+            Array = "rnbokbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBOKBNR";
             PawnDoubleMove = true;
             EnPassant = false;
             Castling.Value = "None";
@@ -108,7 +108,13 @@ namespace ChessV.Games
         public override void AddRules()
         {
             base.AddRules();
-            AddRule(new Rules.CwPCheckmateRule(OldQueen));
+
+            if (Array.Contains("O") == true)
+            {
+                AddRule(new Rules.CwPCheckmateRule(OldQueen));
+            }
+
+
             //AddRule(new Rules.ChessWithPointsSwapRule(src, dst));
             //AddRule(new Rules.CwP.ComplexPromotionRule());
             //  OptionalPromotionFromAndToLocationDelegate
