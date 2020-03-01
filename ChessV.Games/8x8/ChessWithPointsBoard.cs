@@ -80,12 +80,12 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rnbokbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBOKBNR";
+            Array = "rnbqkbnr/pppppppp/8/8/8/8/PPPAPPPA/RNBSKBNR";
             PawnDoubleMove = true;
             EnPassant = false;
             Castling.Value = "None";
-            PromotionRule.Value = "Standard";
-            //PromotionRule.Value = "Custom";
+            //PromotionRule.Value = "Standard";
+            PromotionRule.Value = "Custom";
             PromotionTypes = "QRNB";
         }
         #endregion
@@ -123,19 +123,37 @@ namespace ChessV.Games
                 //AddRule(new Rules.CwP.ComplexPromotionRule());
                 //  OptionalPromotionFromAndToLocationDelegate
 
-                if (PromotionRule.Value == "Custom")
+
+
+
+            foreach(Piece p in GetPieceList(0)) //player 1
+            {
+                if(p.HasSwap)
+            }
+
+            foreach (Piece p in GetPieceList(1)) //player 2
+            {
+
+            }
+
+
+
+
+
+
+
+            if (PromotionRule.Value == "Custom")
             {
                 Rules.ComplexPromotionRule promotionRule = new Rules.ComplexPromotionRule();
-
-                List<PieceType> promotionTypes = new List<PieceType>() { Bishop };
+                List<PieceType> promotionTypes = new List<PieceType>() { Adept };
                 //OR                 List<PieceType> availablePromotionTypes = ParseTypeListFromString(PromotionTypes);
 
 
                 //Location fromLoc;
                 //Location toLoc;
                 //Rules.OptionalPromotionFromAndToLocationDelegate x = new Rules.OptionalPromotionFromAndToLocationDelegate(fromLoc, toLoc);
-                List<PieceType> promoteByReplacementTypes = new List<PieceType>() { Peasant };
-                promotionRule.AddPromotionCapability(Bishop, promotionTypes, promoteByReplacementTypes,
+                List<PieceType> promoteByReplacementTypes = new List<PieceType>() { Adept, Bishop };
+                promotionRule.AddPromotionCapability(Sorceress, promotionTypes, promoteByReplacementTypes,
                     (fromLoc, toLoc) => fromLoc.Rank == 3 || toLoc.Rank == 3 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote);
 
                 //version 1
