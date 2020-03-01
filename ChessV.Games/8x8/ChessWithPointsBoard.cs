@@ -80,7 +80,7 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+            Array = "rnbokbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBOKBNR";
             PawnDoubleMove = true;
             EnPassant = false;
             Castling.Value = "None";

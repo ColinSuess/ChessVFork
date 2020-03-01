@@ -242,7 +242,16 @@ namespace ChessV
         //  returns the BitBoard containing all the pieces of the given player and type
         //  (this information is updated incrementally so it is always available)
 		public BitBoard GetPieceTypeBitboard( int player, int pieceType )
-		{ return pieceTypeBitboards[player, pieceType]; }
+		{
+			try
+			{
+				return pieceTypeBitboards[player, pieceType];
+			}
+			catch(System.IndexOutOfRangeException)
+			{
+				return playerPieceBitboards[player];
+			}
+		}
 		//	same but optimized for boards with 64 squares or less
 		public BitBoard64 GetPieceTypeBitboard64( int player, int pieceType )
 		{ return pieceTypeBitboards64[player, pieceType]; }
