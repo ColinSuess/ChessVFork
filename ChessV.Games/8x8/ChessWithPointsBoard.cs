@@ -114,13 +114,10 @@ namespace ChessV.Games
             base.AddRules();
             if (Array.Contains("O") || Array.Contains("o"))
             {
-                RemoveRule(typeof(Rules.CheckmateRule));
-                AddRule(new Rules.CwPCheckmateRule(King));
-            }
-                //AddRule(new Rules.CheckmateRule(King));
                 
-
-
+                AddRule(new Rules.CwPCheckmateRule(OldQueen));
+            }
+                
 
                 //AddRule(new Rules.ChessWithPointsSwapRule(src, dst));
                 //AddRule(new Rules.CwP.ComplexPromotionRule());
