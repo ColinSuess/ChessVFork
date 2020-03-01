@@ -151,7 +151,40 @@ namespace ChessV.Games
             type.StepMoveOnly(new Direction(-5, 0));
             type.StepMoveOnly(new Direction(-6, 0));
             type.StepMoveOnly(new Direction(-7, 0));
+            /*MoveCapability swap = new MoveCapability();
+
+
+
+
+            doubleMove.MinSteps = 2;
+            doubleMove.MaxSteps = 2;
+            doubleMove.MustCapture = false;
+            doubleMove.CanCapture = false;
+            doubleMove.Direction = new Direction(1, 0);
+            doubleMove.Condition = location => location.Rank == 1;
+            type.AddMoveCapability(doubleMove);*/
+        }/*
+        public ChessWithPointsSwapRule(Piece srcPiece, Piece dstPiece)
+        {
+            this.srcPiece = srcPiece;
+            this.dstPiece = dstPiece;
+
         }
+
+        public override void GenerateSpecialMoves(MoveList list, bool capturesOnly, int ply)
+        {
+            //get location of srcPiece
+            //get location of dstPiece
+            //swap them
+
+            list.BeginMoveAdd(MoveType.Swap, srcPiece.Square, dstPiece.Square);
+            Piece src = list.AddPickup(srcPiece.Square);
+            Piece dst = list.AddPickup(dstPiece.Square);
+            list.AddDrop(src, dstPiece.Square);
+            list.AddDrop(dst, srcPiece.Square);
+            list.EndMoveAdd(0);
+
+        }*/
     }
     #endregion
     #endregion rook types
@@ -290,6 +323,7 @@ namespace ChessV.Games
         }
     }
     #endregion
+
     #region Squire
     [PieceType("Squire", "ChessWithPoints")]
     public class Squire : PieceType

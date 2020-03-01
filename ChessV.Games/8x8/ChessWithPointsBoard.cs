@@ -18,6 +18,7 @@ some reason you need a copy, please visit <http://www.gnu.org/licenses/>.
 
 ****************************************************************************/
 using ChessV.Evaluations;
+using System.Collections.Generic;
 namespace ChessV.Games
 {
     //**********************************************************************
@@ -59,6 +60,8 @@ namespace ChessV.Games
         public PieceType JoanofArc;
         public PieceType QueenOfAir;
         public PieceType QueenOfDarkness;
+        public Piece src;
+        public Piece dst;
         [Royal] public PieceType OldQueen;
         
         // *** CONSTRUCTION *** //
@@ -81,7 +84,8 @@ namespace ChessV.Games
             PawnDoubleMove = true;
             EnPassant = false;
             Castling.Value = "None";
-            PromotionRule.Value = "Standard";
+            //PromotionRule.Value = "Standard";
+            PromotionRule.Value = "Custom";
             PromotionTypes = "QRNB";
         }
         #endregion
@@ -97,15 +101,69 @@ namespace ChessV.Games
             AddPieceType(Peasant = new Peasant("Peasant", "X", 100, 125));
         }
         #endregion
-        
 
         #region AddRules
         public override void AddRules()
         {
             base.AddRules();
             AddRule(new Rules.CwPCheckmateRule(OldQueen));
+            //AddRule(new Rules.ChessWithPointsSwapRule(src, dst));
+            //AddRule(new Rules.CwP.ComplexPromotionRule());
+            //  OptionalPromotionFromAndToLocationDelegate
+
+            if (PromotionRule.Value == "Custom")
+            {
+                Rules.ComplexPromotionRule promotionRule = new Rules.ComplexPromotionRule();
+
+                List<PieceType> promotionTypes = new List<PieceType>() { Peasant };
+                //OR                 List<PieceType> availablePromotionTypes = ParseTypeListFromString(PromotionTypes);
+
+
+                //Location fromLoc;
+                //Location toLoc;
+                //Rules.OptionalPromotionFromAndToLocationDelegate x = new Rules.OptionalPromotionFromAndToLocationDelegate(fromLoc, toLoc);
+                List<PieceType> promoteByReplacementTypes = new List<PieceType>() { Bishop };
+                promotionRule.AddPromotionCapability(Bishop, promotionTypes, promoteByReplacementTypes,
+                    (fromLoc, toLoc) => fromLoc.Rank == 3 || toLoc.Rank == 3 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote);
+
+                //version 1
+                //List<PieceType> promoteByReplacementTypes = new List<PieceType>() { FastChariot };
+               // promotionRule.AddPromotionCapability(Pawn, promotionTypes, promoteByReplacementTypes, 
+                 //   loc => loc.Rank == 7 ? Rules.PromotionOption.MustPromote : Rules.PromotionOption.CannotPromote);
+
+                //v2
+                //promotionRule.AddPromotionCapability(Pawn, promotionTypes, null,
+                  //  loc => loc.Rank == Board.NumRanks - 1 ? Rules.PromotionOption.MustPromote :
+                    //    (loc.Rank >= Board.NumRanks - 3 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote));
+
+                //v3
+                //silverGeneralPromotionRule.AddPromotionCapability(SilverGeneral, promotionTypes, null,
+                //(fromLoc, toLoc) => fromLoc.Rank == 7 || toLoc.Rank == 7 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote);
+
+                AddRule(promotionRule);
+            }
+
+
+
+            /*
+
+                public void AddPromotionCapability
+            (PieceType promotingType,
+              List<PieceType> promotionTypes,
+              List<PieceType> replacementPromotionTypes,
+              OptionalPromotionFromAndToLocationDelegate conditionDeletage)
+            {
+                PromotionCapability newCapability = new PromotionCapability();
+                newCapability.PromotingType = promotingType;
+                newCapability.PromotionTypes = promotionTypes;
+                newCapability.ReplacementPromotionTypes = replacementPromotionTypes;
+                newCapability.ConditionDelegate = null;
+                newCapability.FromAndToConditionDelegate = conditionDeletage;
+                promotionCapabilities.Add(newCapability);
+            }*/
         }
 
         #endregion
     }
 }
+
