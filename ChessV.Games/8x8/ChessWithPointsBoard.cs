@@ -129,9 +129,9 @@ namespace ChessV.Games
             AddPieceType(QueenOfDarkness = new QueenofAirAndDarkness("QueenOfAirAndDarkness", "E", 900, 1000));
             AddPieceType(Peasant = new Peasant("Peasant", "X", 100, 125));
             AddPieceType(Adept = new Adept("Adept", "A", 100, 125));
-            AddPieceType(ArcaneTower = new ArcaneTower("ArcaneTower", "T", 500, 550));
-            AddPieceType(ArcanePriest = new ArcanePriest("ArcanePriest", "C", 325, 350));
-            AddPieceType(Pegasus = new Pegasus("Pegasus", "G", 325, 325));
+            //AddPieceType(ArcaneTower = new ArcaneTower("ArcaneTower", "T", 500, 550));
+            //AddPieceType(ArcanePriest = new ArcanePriest("ArcanePriest", "C", 325, 350));
+            //AddPieceType(Pegasus = new Pegasus("Pegasus", "G", 325, 325));
             AddPieceType(Sorceress = new Sorceress("Sorceress", "S", 950, 1000));
             //AddPieceType(Rook = new Rook("Rook", "R", 500, 550));
             //AddPieceType(Bishop = new Bishop("Bishop", "B", 325, 350));

@@ -19,13 +19,12 @@ some reason you need a copy, please visit <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ChessV.Games.Rules
 {
-	public class CwPSwapRuleSorc: Rule
+	public class CwPSwapRuleSorc : Rule
 	{
-		public CwPSwapRuleSorc( PieceType kingType, PieceType pawnType )
+		public CwPSwapRuleSorc(PieceType kingType, PieceType pawnType)
 		{
 			this.kingType = kingType;
 			this.pawnType = pawnType;
@@ -37,47 +36,42 @@ namespace ChessV.Games.Rules
 			this.swapTypesDst = swapTypes;
 		}
 
-		public override void GenerateSpecialMoves( MoveList list, bool capturesOnly, int ply )
+		public override void GenerateSpecialMoves(MoveList list, bool capturesOnly, int ply)
 		{
-			if( !capturesOnly )
+			if (!capturesOnly)
 			{
-				int king = Board.GetPieceTypeBitboard( Game.CurrentSide, kingType.TypeNumber ).LSB;
-				if( !IsSquareAttacked( king, Game.CurrentSide ^ 1 ) )
+				int king = Board.GetPieceTypeBitboard(Game.CurrentSide, kingType.TypeNumber).LSB;
+				if (!IsSquareAttacked(king, Game.CurrentSide ^ 1))
 				{
 					//for( int dir = 0; dir < 8; dir++ ) //checks every square around the King (the King's normal move area)
-					foreach(Piece p in Game.GetPieceList(Game.CurrentSide)) //I THINK THIS IS CAUSING IT TO ACTUALLY STRIP THE SQUARE AND ACTUALLY RUN MULTIPLE TIMES, RATHER THAN ALLOW THE CODE TO BE RUN
-						
+					foreach (Piece p in Game.GetPieceList(Game.CurrentSide))
 					{
 						//int nextSquare = Board.NextSquare( dir, king );
 						//if( nextSquare >= 0 && Board[nextSquare] != null &&
 						//	Board[nextSquare].Player == Game.CurrentSide &&
 						//	swapTypesDst.Contains(Board[nextSquare].PieceType) )
-						if(swapTypesDst.Contains(p.PieceType))
+						if (swapTypesDst.Contains(p.PieceType))
 						{
 							//	The king can swap with this piece.  We won't bother 
 							//	to see if the target square is attacked because the 
 							//	CheckmateRule is going to verify that anyway and we 
 							//	don't want to perform that operation twice.
-							list.BeginMoveAdd( MoveType.Swap, king, p.Square );
-							if (king < 0)
-							{
-								Debug.WriteLine(this);
-							}
-							Piece kingpiece = list.AddPickup( king );
+							list.BeginMoveAdd(MoveType.Swap, king, p.Square);
+							Piece kingpiece = list.AddPickup(king);
 							Piece otherpiece = list.AddPickup(p.Square);
-							list.AddDrop( kingpiece, p.Square);
-							list.AddDrop( otherpiece, king );
-							list.EndMoveAdd( 0 );
+							list.AddDrop(kingpiece, p.Square);
+							list.AddDrop(otherpiece, king);
+							list.EndMoveAdd(0);
 						}
 					}
 				}
 			}
 		}
 
-		public override void GetNotesForPieceType( PieceType type, List<string> notes )
+		public override void GetNotesForPieceType(PieceType type, List<string> notes)
 		{
-			if( type == kingType )
-				notes.Add( "swap ability" );
+			if (type == kingType)
+				notes.Add("swap ability");
 		}
 
 		protected PieceType kingType;
