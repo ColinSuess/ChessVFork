@@ -19,6 +19,7 @@ some reason you need a copy, please visit <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 using ChessV.Evaluations;
 using System.Collections.Generic;
+using System.Diagnostics;
 namespace ChessV.Games
 {
     //**********************************************************************
@@ -60,10 +61,18 @@ namespace ChessV.Games
         public PieceType JoanofArc;
         public PieceType QueenOfAir;
         public PieceType QueenOfDarkness;
+        [Royal] public PieceType OldQueen;
+
+
         public Piece src;
         public Piece dst;
-        [Royal] public PieceType OldQueen;
-        
+
+        public List<Piece> Player1SwappablePieces = new List<Piece>();
+        public List<Piece> Player2SwappablePieces = new List<Piece>();
+        public List<PieceType> swapPieces = new List<PieceType>();
+
+
+
         // *** CONSTRUCTION *** //
 
         public ChessWithPoints() :
@@ -87,6 +96,26 @@ namespace ChessV.Games
             //PromotionRule.Value = "Standard";
             PromotionRule.Value = "Custom";
             PromotionTypes = "QRNB";
+            /*
+            foreach (Piece p in GetPieceList(0)) //player 1
+            {
+                if (p.HasSwap == true)
+                {
+                    Player1SwappablePieces.Add(p);
+                    Debug.WriteLine(Player1SwappablePieces);
+                }
+            }
+
+            foreach (Piece p in GetPieceList(1)) //player 2
+            {
+                if (p.HasSwap == true)
+                {
+                    Player2SwappablePieces.Add(p);
+                    Debug.WriteLine(Player2SwappablePieces);
+                }
+            }
+            */
+
         }
         #endregion
 
@@ -95,7 +124,6 @@ namespace ChessV.Games
         {
             base.AddPieceTypes();
             AddChessPieceTypes();
-            
             AddPieceType(FastChariot = new FastChariot("Fast Chariot", "I", 500, 500, "FastChariot"));
             AddPieceType(QueenOfDarkness = new QueenofAirAndDarkness("QueenOfAirAndDarkness", "E", 900, 1000));
             AddPieceType(Peasant = new Peasant("Peasant", "X", 100, 125));
@@ -105,6 +133,8 @@ namespace ChessV.Games
             {
                 AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000, "StarCat"));
             }
+            //swapPieces.Add(King);
+            swapPieces.Add(Adept);
         }
         #endregion
 
@@ -114,33 +144,15 @@ namespace ChessV.Games
             base.AddRules();
             if (Array.Contains("O") || Array.Contains("o"))
             {
-                
                 AddRule(new Rules.CwPCheckmateRule(OldQueen));
             }
-                
-
-                //AddRule(new Rules.ChessWithPointsSwapRule(src, dst));
-                //AddRule(new Rules.CwP.ComplexPromotionRule());
-                //  OptionalPromotionFromAndToLocationDelegate
+            AddRule(new Rules.CwPSwapRule(Sorceress, swapPieces));
+            //AddRule(new Rules.CwPSwapRuleSorc(Sorceress, swapPieces));
 
 
-
-
-            foreach(Piece p in GetPieceList(0)) //player 1
-            {
-                if(p.HasSwap == true)
-                {
-                    break;//add code here
-                }
-            }
-
-            foreach (Piece p in GetPieceList(1)) //player 2
-            {
-                if (p.HasSwap == true)
-                {
-                    break;//add code here
-                }
-            }
+            //AddRule(new Rules.ChessWithPointsSwapRule(src, dst));
+            //AddRule(new Rules.CwP.ComplexPromotionRule());
+            //  OptionalPromotionFromAndToLocationDelegate
 
 
 
@@ -148,36 +160,40 @@ namespace ChessV.Games
 
 
 
-            if (PromotionRule.Value == "Custom")
-            {
-                Rules.ComplexPromotionRule promotionRule = new Rules.ComplexPromotionRule();
-                List<PieceType> promotionTypes = new List<PieceType>() { Adept };
-                //OR                 List<PieceType> availablePromotionTypes = ParseTypeListFromString(PromotionTypes);
 
 
-                //Location fromLoc;
-                //Location toLoc;
-                //Rules.OptionalPromotionFromAndToLocationDelegate x = new Rules.OptionalPromotionFromAndToLocationDelegate(fromLoc, toLoc);
-                List<PieceType> promoteByReplacementTypes = new List<PieceType>() { Adept, Bishop };
-                promotionRule.AddPromotionCapability(Sorceress, promotionTypes, promoteByReplacementTypes,
-                    (fromLoc, toLoc) => fromLoc.Rank == 3 || toLoc.Rank == 3 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote);
 
-                //version 1
-                //List<PieceType> promoteByReplacementTypes = new List<PieceType>() { FastChariot };
-               // promotionRule.AddPromotionCapability(Pawn, promotionTypes, promoteByReplacementTypes, 
-                 //   loc => loc.Rank == 7 ? Rules.PromotionOption.MustPromote : Rules.PromotionOption.CannotPromote);
+            /*
+                        if (PromotionRule.Value == "Custom")
+                        {
+                            Rules.ComplexPromotionRule promotionRule = new Rules.ComplexPromotionRule();
+                            List<PieceType> promotionTypes = new List<PieceType>() { Adept };
+                            //OR                 List<PieceType> availablePromotionTypes = ParseTypeListFromString(PromotionTypes);
 
-                //v2
-                //promotionRule.AddPromotionCapability(Pawn, promotionTypes, null,
-                  //  loc => loc.Rank == Board.NumRanks - 1 ? Rules.PromotionOption.MustPromote :
-                    //    (loc.Rank >= Board.NumRanks - 3 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote));
 
-                //v3
-                //silverGeneralPromotionRule.AddPromotionCapability(SilverGeneral, promotionTypes, null,
-                //(fromLoc, toLoc) => fromLoc.Rank == 7 || toLoc.Rank == 7 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote);
+                            //Location fromLoc;
+                            //Location toLoc;
+                            //Rules.OptionalPromotionFromAndToLocationDelegate x = new Rules.OptionalPromotionFromAndToLocationDelegate(fromLoc, toLoc);
+                            List<PieceType> promoteByReplacementTypes = new List<PieceType>() { Adept, Bishop };
+                            promotionRule.AddPromotionCapability(Sorceress, promotionTypes, promoteByReplacementTypes,
+                                (fromLoc, toLoc) => fromLoc.Rank == 3 || toLoc.Rank == 3 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote);
 
-                AddRule(promotionRule);
-            }
+                            //version 1
+                            //List<PieceType> promoteByReplacementTypes = new List<PieceType>() { FastChariot };
+                           // promotionRule.AddPromotionCapability(Pawn, promotionTypes, promoteByReplacementTypes, 
+                             //   loc => loc.Rank == 7 ? Rules.PromotionOption.MustPromote : Rules.PromotionOption.CannotPromote);
+
+                            //v2
+                            //promotionRule.AddPromotionCapability(Pawn, promotionTypes, null,
+                              //  loc => loc.Rank == Board.NumRanks - 1 ? Rules.PromotionOption.MustPromote :
+                                //    (loc.Rank >= Board.NumRanks - 3 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote));
+
+                            //v3
+                            //silverGeneralPromotionRule.AddPromotionCapability(SilverGeneral, promotionTypes, null,
+                            //(fromLoc, toLoc) => fromLoc.Rank == 7 || toLoc.Rank == 7 ? Rules.PromotionOption.CanPromote : Rules.PromotionOption.CannotPromote);
+
+                            AddRule(promotionRule);
+                        }*/
 
 
 

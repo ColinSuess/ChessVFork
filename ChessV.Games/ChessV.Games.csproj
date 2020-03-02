@@ -206,6 +206,8 @@
     <Compile Include="Rules\ChessWithPoints\CwPComplexPromotionRule.cs" />
     <Compile Include="Rules\ChessWithPoints\CwPCheckmateRule.cs" />
     <Compile Include="Rules\ChessWithPoints\CwPChessWithPointsSwapRule.cs" />
+    <Compile Include="Rules\ChessWithPoints\CwPSwapRuleSorc.cs" />
+    <Compile Include="Rules\ChessWithPoints\CwPSwapRule.cs" />
     <Compile Include="Rules\KingsCourt\KingsFlightRule.cs" />
     <Compile Include="Rules\LimitPieceTypeQuantityRule.cs" />
     <Compile Include="Rules\OptionalCaptureByOvertakeRule.cs" />

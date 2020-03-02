@@ -33,6 +33,7 @@ namespace ChessV.Games
             type.Slide(new Direction(-1, 1), 5);
             type.Slide(new Direction(-1, -1), 5);
         }
+
     }
     #endregion
 
@@ -379,7 +380,7 @@ namespace ChessV.Games
         public bool isCommoner = true;
         public bool HasSwap = true;
         public Adept(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
-               base("Pawn", name, notation, midgameValue, endgameValue, preferredImageName)
+               base("Adept", name, notation, midgameValue, endgameValue, preferredImageName)
         {
             IsPawn = true;
             IsSliced = false;
