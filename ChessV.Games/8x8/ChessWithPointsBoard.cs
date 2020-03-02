@@ -31,7 +31,7 @@ namespace ChessV.Games
     //    which it is derived as they are intended to provide functionality
     //    common to chess variants.
 
-    [Game("Chess with Points", typeof(Geometry.Rectangular), 8, 8,
+    [Game("ChessWithPoints", typeof(Geometry.Rectangular), 8, 8,
           XBoardName = "normal",
           InventedBy = "UWCE",
           Invented = "circa 21th century",
@@ -70,6 +70,7 @@ namespace ChessV.Games
         public List<Piece> Player1SwappablePieces = new List<Piece>();
         public List<Piece> Player2SwappablePieces = new List<Piece>();
         public List<PieceType> swapPieces = new List<PieceType>();
+        public List<PieceType> swapPiecesForAdept = new List<PieceType>();
 
 
 
@@ -89,12 +90,12 @@ namespace ChessV.Games
         public override void SetGameVariables()
         {
             base.SetGameVariables();
-            Array = "rnbqkbnr/pppppppp/8/8/8/8/PPPAPPPA/RNBSKBNR";
+            Array = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBSKBNR";
             PawnDoubleMove = true;
             EnPassant = false;
             Castling.Value = "None";
-            //PromotionRule.Value = "Standard";
-            PromotionRule.Value = "Custom";
+            PromotionRule.Value = "Standard";
+            //PromotionRule.Value = "Custom";
             PromotionTypes = "QRNB";
             /*
             foreach (Piece p in GetPieceList(0)) //player 1
@@ -127,14 +128,28 @@ namespace ChessV.Games
             AddPieceType(FastChariot = new FastChariot("Fast Chariot", "I", 500, 500, "FastChariot"));
             AddPieceType(QueenOfDarkness = new QueenofAirAndDarkness("QueenOfAirAndDarkness", "E", 900, 1000));
             AddPieceType(Peasant = new Peasant("Peasant", "X", 100, 125));
-            AddPieceType(Sorceress = new Sorceress("Sorceress", "S", 100, 125));
             AddPieceType(Adept = new Adept("Adept", "A", 100, 125));
-            if(Array.Contains("O") || Array.Contains("o"))
+            AddPieceType(ArcaneTower = new ArcaneTower("ArcaneTower", "T", 500, 550));
+            AddPieceType(ArcanePriest = new ArcanePriest("ArcanePriest", "C", 325, 350));
+            AddPieceType(Pegasus = new Pegasus("Pegasus", "G", 325, 325));
+            AddPieceType(Sorceress = new Sorceress("Sorceress", "S", 950, 1000));
+            //AddPieceType(Rook = new Rook("Rook", "R", 500, 550));
+            //AddPieceType(Bishop = new Bishop("Bishop", "B", 325, 350));
+            //AddPieceType(Knight = new Knight("Knight", "N", 325, 325));
+            //AddPieceType(Queen = new Queen("Queen", "Q", 950, 1000));
+
+
+
+            if (Array.Contains("O") || Array.Contains("o"))
             {
                 AddPieceType(OldQueen = new OldQueen("Old Queen", "O", 950, 1000, "StarCat"));
             }
             //swapPieces.Add(King);
-            swapPieces.Add(Adept);
+            //swapPieces.Add(Adept);
+            swapPiecesForAdept.Add(Sorceress);
+            //swapPiecesForAdept.Add(ArcaneTower);
+            //swapPiecesForAdept.Add(ArcanePriest);
+            //swapPiecesForAdept.Add(Pegasus);
         }
         #endregion
 
@@ -146,8 +161,8 @@ namespace ChessV.Games
             {
                 AddRule(new Rules.CwPCheckmateRule(OldQueen));
             }
-            AddRule(new Rules.CwPSwapRule(Sorceress, swapPieces));
-            //AddRule(new Rules.CwPSwapRuleSorc(Sorceress, swapPieces));
+            AddRule(new Rules.CwPSwapRuleSorc(Adept, swapPiecesForAdept));
+            //AddRule(new Rules.CwPSwapRule(Adept, swapPiecesForAdept));
 
 
             //AddRule(new Rules.ChessWithPointsSwapRule(src, dst));

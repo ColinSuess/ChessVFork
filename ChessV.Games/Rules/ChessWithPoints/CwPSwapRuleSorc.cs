@@ -19,6 +19,7 @@ some reason you need a copy, please visit <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ChessV.Games.Rules
 {
@@ -44,7 +45,8 @@ namespace ChessV.Games.Rules
 				if( !IsSquareAttacked( king, Game.CurrentSide ^ 1 ) )
 				{
 					//for( int dir = 0; dir < 8; dir++ ) //checks every square around the King (the King's normal move area)
-					foreach(Piece p in Game.GetPieceList(Game.CurrentSide))
+					foreach(Piece p in Game.GetPieceList(Game.CurrentSide)) //I THINK THIS IS CAUSING IT TO ACTUALLY STRIP THE SQUARE AND ACTUALLY RUN MULTIPLE TIMES, RATHER THAN ALLOW THE CODE TO BE RUN
+						
 					{
 						//int nextSquare = Board.NextSquare( dir, king );
 						//if( nextSquare >= 0 && Board[nextSquare] != null &&
@@ -57,6 +59,10 @@ namespace ChessV.Games.Rules
 							//	CheckmateRule is going to verify that anyway and we 
 							//	don't want to perform that operation twice.
 							list.BeginMoveAdd( MoveType.Swap, king, p.Square );
+							if (king < 0)
+							{
+								Debug.WriteLine(this);
+							}
 							Piece kingpiece = list.AddPickup( king );
 							Piece otherpiece = list.AddPickup(p.Square);
 							list.AddDrop( kingpiece, p.Square);

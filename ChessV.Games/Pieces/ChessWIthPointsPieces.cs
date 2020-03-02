@@ -236,13 +236,13 @@ namespace ChessV.Games
 
     #region Bishop types
 
-    #region Arcanepriest
-    [PieceType("Arcanepriest", "ChessWithPoints")]
-    public class Arcanepriest : PieceType
+    #region ArcanePriest
+    [PieceType("ArcanePriest", "ChessWithPoints")]
+    public class ArcanePriest : PieceType
     {
         public bool HasSwap = true;
-        public Arcanepriest(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
-            base("Arcanepriest", name, notation, midgameValue, endgameValue, preferredImageName)
+        public ArcanePriest(string name, string notation, int midgameValue, int endgameValue, string preferredImageName = null) :
+            base("ArcanePriest", name, notation, midgameValue, endgameValue, preferredImageName)
         {
             AddMoves(this);
         }
@@ -256,6 +256,8 @@ namespace ChessV.Games
         }
     }
     #endregion
+
+
 
     #region Clergyriders
     [PieceType("Clergyriders", "ChessWithPoints")]
